@@ -1,0 +1,24 @@
+[
+    {
+        "id"       : 1,
+        "title"    : "Test issue",
+        "priority" : "5",
+        "status"     : "TODO",
+        "description": ""
+    },
+    {
+        "id"       : 2,
+        "title"    : "Test issue 2",
+        "priority" : "7",
+        "status"     : "TODO",
+        "description": " These are the new issues loaded via JSON"
+    },
+    {
+        "id"       : 3,
+        "title"    : "Finished issue",
+        "priority" : "1",
+        "status"     : "Done",
+        "description": ""
+    }
+
+]
