@@ -3,11 +3,13 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import {Routes} from "./routes/routes";
 
+const env = process.env.NODE_ENV || 'development';
+const config = require('../environment')[env];
+
 class App {
 
     public app: express.Application;
     public routes: Routes = new Routes();
-    public mongoUrl: string = 'mongodb://167.99.165.96/track_yak_db';
 
     constructor() {
         this.app = express();
@@ -16,9 +18,29 @@ class App {
         this.routes.routes(this.app);
     }
 
-    private mongoSetup(): void{
+    private mongoSetup(): void {
+        const mongoUrl = "mongodb://" +
+            config.database.host +
+            ":" + config.database.port +
+            "/" + config.database.db +
+            "?authSource=admin";
+
+        const mongooseConfig = {
+            user: config.database.user,
+            pass: config.database.password,
+            dbName: config.database.db,
+            useNewUrlParser: true
+        };
+
         mongoose.Promise = global.Promise;
-        mongoose.connect(this.mongoUrl);
+        mongoose.connect(mongoUrl, mongooseConfig).then(
+            () => {
+                console.log("Connected to DB");
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     private config(): void {

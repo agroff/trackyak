@@ -17,7 +17,7 @@ export const IssueSchema = new Schema({
         type: String
     },
     description: {
-        type: Number
+        type: String
     },
     created_date: {
         type: Date,

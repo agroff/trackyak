@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './issues.css';
-import IssueDataService from "./IssueDataService";
+import IssueDataService from "./IssueService";
 
 
 class IssueData extends Component {

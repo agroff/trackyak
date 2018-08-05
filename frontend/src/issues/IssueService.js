@@ -1,6 +1,6 @@
-import ApiService from '../ApiService'
+import ApiService from '../api/ApiService'
 
-class IssueDataService {
+class IssueService {
     constructor(apiService = false) {
 
         if (apiService === false) {
@@ -8,6 +8,41 @@ class IssueDataService {
         }
 
         this.apiService = apiService;
+
+        this.timeout = 0;
+    }
+
+    findIssue(issueId, issues){
+        let issue;
+        issues.forEach(function(thisIssue){
+            if(String(thisIssue.id) === String(issueId)){
+                issue = thisIssue;
+            }
+        });
+
+        if(!issue){
+            throw new Error("Could not find issue ID " + issueId);
+        }
+
+        return issue;
+    }
+
+    postIssueDelayed(issue, timeToWait){
+        const doPost = (issue) => {
+            this.apiService.postIssue(issue);
+        };
+
+        console.log(this);
+
+        if(this.timeout){
+            clearInterval(this.timeout);
+        }
+
+        this.timeout = setTimeout(function(){
+            console.log("doing the post", doPost);
+            doPost(issue);
+            this.timeout = 0;
+        }, timeToWait);
     }
 
     getIssues(projectId) {
@@ -78,4 +113,4 @@ class IssueDataService {
     }
 }
 
-export default IssueDataService;
+export default IssueService;

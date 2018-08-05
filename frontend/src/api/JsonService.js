@@ -1,17 +1,8 @@
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch'
 
-/**
- * The API Service provides an asynchronous interface to the API. All application network requests
- * should come through here. It should never modify the data - any modification of API dats should
- * be handled by separate services.
- */
-class ApiService {
 
-    constructor() {
-        this.baseUrl = 'http://localhost:3000/api/';
-    }
-
+class JsonService {
     fetchJson(url) {
         let checkStatus = function (response) {
             if (response.status >= 200 && response.status < 300) {
@@ -36,11 +27,24 @@ class ApiService {
             });
     }
 
-    getIssues(projectId) {
-        const url = this.baseUrl + 'issues.json';
+    postJson(url, object, raiseException = false) {
+        let promise = fetch(url, {
+            method  : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body    : JSON.stringify(object)
+        });
 
-        return this.fetchJson(url);
+        return promise.then(() => {
+            console.log("json posted to " + url);
+        }).catch((error) => {
+            console.log("error posting json to " + url);
+            if (raiseException) {
+                throw new Error(error);
+            }
+        });
     }
 }
 
-export default ApiService;
+export default JsonService;
