@@ -12,6 +12,10 @@ class IssueService {
         this.timeout = 0;
     }
 
+    setCredentials(auth){
+        this.apiService.setCredentials(auth);
+    }
+
     findIssue(issueId, issues){
         let issue;
         issues.forEach(function(thisIssue){
@@ -32,14 +36,11 @@ class IssueService {
             this.apiService.postIssue(issue);
         };
 
-        console.log(this);
-
         if(this.timeout){
             clearInterval(this.timeout);
         }
 
         this.timeout = setTimeout(function(){
-            console.log("doing the post", doPost);
             doPost(issue);
             this.timeout = 0;
         }, timeToWait);

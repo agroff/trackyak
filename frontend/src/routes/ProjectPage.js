@@ -4,17 +4,6 @@ import IssueList from "../issues/IssueList";
 
 class ProjectPage extends Component {
 
-    componentDidMount() {
-
-        this.issueData.getIssues().then(issues => {
-            this.setState({issues : issues});
-        });
-
-        this.issueData.getIssueFields().then(issueFields => {
-            this.setState({issueFields});
-        });
-    }
-
     constructor(props) {
         super(props);
 
@@ -41,6 +30,24 @@ class ProjectPage extends Component {
         };
     }
 
+    componentDidMount() {
+        const projectId = this.props.match.params.id;
+        this.issueData.setCredentials(this.props.auth);
+
+        this.issueData.getIssues(projectId).then(issues => {
+            if(!issues){
+                issues = [];
+            }
+            this.setState({issues : issues});
+        }).catch(()=>{
+
+        });
+
+        this.issueData.getIssueFields().then(issueFields => {
+            this.setState({issueFields});
+        });
+    }
+
     updateData(value, id, fieldName) {
         const issues = this.state.issues.slice();
         let newId    = this.state.issues.length + 1;
@@ -54,6 +61,7 @@ class ProjectPage extends Component {
             let newIssue = this.issueData.getNewIssue(fields);
 
             newIssue.id         = newId;
+            newIssue.projectId  = this.props.match.params.id;
             newIssue[fieldName] = value;
 
             issues.push(newIssue);
@@ -68,12 +76,13 @@ class ProjectPage extends Component {
     render() {
 
         return (
-            <div>
+            <div className="auth-box full-page">
                 <h1>
                     Project Page
                 </h1>
                 <IssueList issues={this.state.issues}
                            issueFields={this.state.issueFields}
+                           projectId={this.props.match.params.id}
                            updateData={(event, id, field) => this.updateData(event, id, field)}/>
 
             </div>

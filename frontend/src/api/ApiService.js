@@ -12,7 +12,14 @@ class ApiService extends JsonService{
     constructor() {
         super();
 
-        this.baseUrl = 'http://localhost:3001/';
+        //this.baseUrl = 'http://localhost:3001/';
+        this.baseUrl = 'https://api.trackyak.com/';
+    }
+
+    authenticateUser(user, raiseException = false){
+        const url =  this.baseUrl + 'authenticate';
+
+        return this.postJson(url, user, raiseException);
     }
 
     postUser(user, raiseException = false){
@@ -21,13 +28,25 @@ class ApiService extends JsonService{
         return this.postJson(url, user, raiseException);
     }
 
+    postProject(name, id){
+        const url =  this.baseUrl + 'project';
+
+        return this.postJson(url, {name : name, id : id});
+    }
+
+    getProjects(){
+        const url =  this.baseUrl + 'projects';
+
+        return this.fetchJson(url);
+    }
+
     /**
      * Fetches all the issues for a given project
      * @param projectId
      * @returns {*}
      */
     getIssues(projectId) {
-        const url = this.baseUrl + 'issues';
+        const url = this.baseUrl + 'issues/'+projectId;
 
         return this.fetchJson(url);
     }

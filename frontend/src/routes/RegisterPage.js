@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import UserService from "../users/UserService";
 
 class RegisterPage extends Component {
@@ -71,15 +71,23 @@ class RegisterPage extends Component {
         let promise = this.userService.registerUser(user, true);
 
         promise
-            .then(() => {
-                window.location = '/project';
+            .then((user) => {
+                this.props.authenticate({
+                    id: user.id,
+                    name : user.name,
+                    email : user.email
+                },user.token);
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(error);
                 setTimeout(()=>this.setState({networkError : true}), 200)
             });
     }
 
     render() {
+        if(this.props.auth.id){
+            return <Redirect to="/dashboard" />;
+        }
 
         return (
             <div className="auth-box">

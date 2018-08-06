@@ -7,7 +7,7 @@ const Issue = mongoose.model('Issue', IssueSchema);
 export class IssueController {
 
     public getIssues(request: Request, response: Response){
-        Issue.find({}, function(error, issues){
+        Issue.find({projectId : request.params.projectId}, function(error, issues){
             if (error) {
                 response.send(error);
                 return;
@@ -21,15 +21,8 @@ export class IssueController {
 
         delete object.__v;
 
-        // Issue.find({id: object.id}).exec(function(error){
-        //     if (error) {
-        //         response.send(error);
-        //     }
-        //     response.json(object);
-        // });
-        //
-        // return;
-        Issue.update({id: object.id}, object, {upsert: true}, function (error) {
+        const match = {id: object.id, projectId:object.projectId};
+        Issue.update(match, object, {upsert: true}, function (error) {
             if (error) {
                 response.send(error);
             }
@@ -37,10 +30,5 @@ export class IssueController {
                 response.json(object);
             }
         });
-
-        console.log(object);
-        // newContact.save((error, contact) => {
-        //
-        // });
     }
 }

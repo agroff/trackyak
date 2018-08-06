@@ -2,6 +2,8 @@ const config   = {
     development : {
         //url to be used in link generation
         url      : '',
+        // 64 character hex string for generating JWTs
+        secret : "00",
         //mongodb connection settings
         database : {
             host     : '127.0.0.1',
@@ -19,6 +21,8 @@ const config   = {
     production  : {
         //url to be used in link generation
         url      : '',
+        // 64 character hex string for generating JWTs
+        secret : "00",
         //mongodb connection settings
         database : {
             host     : '127.0.0.1',

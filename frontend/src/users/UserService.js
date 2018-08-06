@@ -8,6 +8,10 @@ class UserService {
     registerUser(user, raiseException = false){
         return this.api.postUser(user, raiseException);
     }
+
+    authenticateUser(user, raiseException = false){
+        return this.api.authenticateUser(user, raiseException);
+    }
 }
 
 export default UserService;

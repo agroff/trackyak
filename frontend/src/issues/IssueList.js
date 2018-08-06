@@ -29,14 +29,6 @@ class IssueData extends Component {
         this.setState({dropdownOpen : false});
     }
 
-    componentWillMount() {
-        //document.addEventListener('mousedown', this.checkUnfocused, false);
-    }
-
-    componentWillUnmount() {
-        //document.removeEventListener('mousedown', this.checkUnfocused, false);
-    }
-
     renderTextInput(issue, field, onChange) {
         const value = issue[field.key];
 

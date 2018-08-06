@@ -16,6 +16,9 @@ export const IssueSchema = new Schema({
     status: {
         type: String
     },
+    projectId : {
+        type : String
+    },
     description: {
         type: String
     },
