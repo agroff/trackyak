@@ -12,8 +12,7 @@ class ApiService extends JsonService{
     constructor() {
         super();
 
-        //this.baseUrl = 'http://localhost:3001/';
-        this.baseUrl = 'https://api.trackyak.com/';
+        this.baseUrl = process.env.REACT_APP_API_LOCATION;
     }
 
     authenticateUser(user, raiseException = false){
