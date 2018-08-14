@@ -87,8 +87,16 @@ export class AuthService {
 
         //const expireTime = new Date().getTime();
 
-        const header = JSON.parse(this.base64Decode(pieces[0]));
-        const claim = JSON.parse(this.base64Decode(pieces[1]));
+        let header;
+        let claim;
+        try{
+            header = JSON.parse(this.base64Decode(pieces[0]));
+            claim = JSON.parse(this.base64Decode(pieces[1]));
+        }
+        catch (e) {
+            return 0;
+        }
+
         const signature = pieces[2];
 
         if(header.typ !== 'JWT'){

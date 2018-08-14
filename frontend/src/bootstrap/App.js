@@ -10,11 +10,16 @@ import LoginPage from '../routes/LoginPage';
 import RegisterPage from '../routes/RegisterPage';
 import ProjectPage from '../routes/ProjectPage';
 import DashboardPage from '../routes/DashboardPage';
+import ProjectService from "../projects/projectService";
+import IssueService from "../issues/IssueService";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+
+        this.projectService = new ProjectService();
+        this.issueService = new IssueService();
 
         let auth = {
             id    : 0,
@@ -26,11 +31,14 @@ class App extends Component {
         let storedAuth = sessionStorage.getItem('auth');
         if (storedAuth) {
             auth = JSON.parse(storedAuth);
+
+            this.projectService.setCredentials(auth);
         }
 
         this.state = {
             auth : auth
-        }
+        };
+
     }
 
     authenticate(user, token) {
@@ -56,6 +64,8 @@ class App extends Component {
         sessionStorage.setItem('auth', JSON.stringify(auth));
 
         this.setState({auth});
+
+        this.projectService.setCredentials(auth);
     }
 
     logout(){
@@ -130,11 +140,13 @@ class App extends Component {
                                     authenticate={authenticate}
                         />
                         <PrivateRoute path="/project/:id"
+                                      projectService={this.projectService}
                                       component={ProjectPage}
                                       auth={this.state.auth}
                                       redirectTo="/login"
                         />
                         <PrivateRoute path="/dashboard"
+                                      projectService={this.projectService}
                                       component={DashboardPage}
                                       auth={this.state.auth}
                                       redirectTo="/login"

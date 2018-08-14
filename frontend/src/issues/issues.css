@@ -1,56 +1,69 @@
 .IssueList {
     display    : grid;
-    border     : 1px solid #eee;
+    border     : 1px solid #e1e1e1;
     border-top : 1px solid transparent;
     max-width  : 100%;
     margin     : 10px 0;
 }
 
 .issueDataField.header {
-    font-size   : 14px;
     font-weight : bold;
+    padding: 5px;
 }
 
 .issueDataField:focus {
-    border : 1px solid #555;
+    /*border : 1px solid #555;*/
 }
 
 .issueDataField {
-    font-size          : 12px;
+    font-size          : 1em;
     margin             : 0;
-    padding            : 5px;
+    padding            : 0;
     -webkit-box-sizing : border-box;
     box-sizing         : border-box;
-    border             : 1px solid #eee;
+    border             : 1px solid #e1e1e1;
     border-bottom      : 1px solid transparent;
     border-right       : 1px solid transparent;
 }
 
+.select-icon:focus,
 .issueDataInput:focus {
-    outline : none;
+    outline: 1px auto #afcbff;
+    outline: 1px auto #959eff;
 }
 
 .issueDataInput {
     border     : none;
     box-sizing : border-box;
-
+    padding    : 5px;
+    font-size  : 1em;
     width      : 100%;
     height     : 100%;
 }
 
+.issueDataSelect {
+    position    : relative;
+    white-space : nowrap;
+    padding     : 5px;
+}
+
+.select-icon:visited,
 .select-icon {
     float            : right;
     position         : relative;
     z-index          : 3;
-    padding          : 3px 5px;
-    background-color : #f5f5f5;
+    padding          : 5px 8px;
+    background-color : #e1e1e1;
     border-radius    : 3px;
     transition       : 0.2s all;
     cursor           : pointer;
+    color            : inherit;
+    text-decoration  : none;
+    border           : none;
 }
 
 .select-icon:hover {
-    background-color : #eee;
+    background-color : #d1d1d1;
 }
 
 .dropdownOptions:focus {
@@ -82,6 +95,6 @@
 }
 
 .option:hover {
-    background-color : #eee;
+    background-color : #e1e1e1;
 }
 

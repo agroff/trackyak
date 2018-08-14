@@ -7,9 +7,14 @@ class ProjectPage extends Component {
     constructor(props) {
         super(props);
 
+        this.projectService = props.projectService;
         this.issueData = new IssueService();
 
         this.state = {
+            project : {
+                "name" : "project"
+            },
+
             issues      : [
                 {
                     id          : 1,
@@ -30,7 +35,7 @@ class ProjectPage extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const projectId = this.props.match.params.id;
         this.issueData.setCredentials(this.props.auth);
 
@@ -46,6 +51,10 @@ class ProjectPage extends Component {
         this.issueData.getIssueFields().then(issueFields => {
             this.setState({issueFields});
         });
+
+        const project = await this.projectService.getProject(projectId);
+
+        this.setState({project});
     }
 
     updateData(value, id, fieldName) {
@@ -78,7 +87,7 @@ class ProjectPage extends Component {
         return (
             <div className="auth-box full-page">
                 <h1>
-                    Project Page
+                    {this.state.project.name}
                 </h1>
                 <IssueList issues={this.state.issues}
                            issueFields={this.state.issueFields}

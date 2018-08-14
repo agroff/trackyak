@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import {CreateProject} from '../projects/CreateProject'
-import ProjectService from "../projects/projectService";
 
 class DashboardPage extends Component {
 
     constructor(props) {
         super(props);
 
-        this.projectService = new ProjectService();
+        this.projectService = props.projectService;
 
         this.projectService.setCredentials(this.props.auth);
 
