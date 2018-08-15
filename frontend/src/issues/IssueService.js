@@ -10,6 +10,8 @@ class IssueService {
         this.apiService = apiService;
 
         this.timeout = 0;
+
+        this.postIssuesQueue = {};
     }
 
     setCredentials(auth){
@@ -32,16 +34,25 @@ class IssueService {
     }
 
     postIssueDelayed(issue, timeToWait){
-        const doPost = (issue) => {
-            this.apiService.postIssue(issue);
+        const doPost = () => {
+            //console.log(Object.entries(this.postIssuesQueue));
+            Object.entries(this.postIssuesQueue).forEach((pair) =>{
+                const issue = pair[1];
+                this.apiService.postIssue(issue);
+            });
+
+            this.postIssuesQueue = {};
         };
 
         if(this.timeout){
             clearInterval(this.timeout);
         }
 
+        //console.log(this.postIssuesQueue);
+        this.postIssuesQueue[issue.id] = issue;
+
         this.timeout = setTimeout(function(){
-            doPost(issue);
+            doPost();
             this.timeout = 0;
         }, timeToWait);
     }
@@ -67,6 +78,13 @@ class IssueService {
         return new Promise(resolve => {
             resolve([
                 {
+                    "title"   : "#",
+                    "key"     : "id",
+                    "type"    : "label",
+                    "size"    : 1,
+                    "enabled" : true,
+                },
+                {
                     "title"   : "Title",
                     "key"     : "title",
                     "type"    : "text",
@@ -79,6 +97,7 @@ class IssueService {
                     "type"    : "select",
                     "default" : "New",
                     "size"    : 3,
+                    "hasFilter" : true,
                     "values"  : [
                         "New",
                         "TODO",

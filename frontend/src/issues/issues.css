@@ -8,7 +8,7 @@
 
 .issueDataField.header {
     font-weight : bold;
-    padding: 5px;
+    padding     : 5px;
 }
 
 .issueDataField:focus {
@@ -16,6 +16,7 @@
 }
 
 .issueDataField {
+    position           : relative;
     font-size          : 1em;
     margin             : 0;
     padding            : 0;
@@ -24,12 +25,21 @@
     border             : 1px solid #e1e1e1;
     border-bottom      : 1px solid transparent;
     border-right       : 1px solid transparent;
+    transition         : 0.4s all;
+    height             : 32px;
 }
 
+.issueDataField.hidden {
+    height   : 0px;
+    opacity  : 0;
+    overflow : hidden;
+}
+
+.fa-button:focus,
 .select-icon:focus,
 .issueDataInput:focus {
-    outline: 1px auto #afcbff;
-    outline: 1px auto #959eff;
+    outline : 1px auto #afcbff;
+    outline : 1px auto #959eff;
 }
 
 .issueDataInput {
@@ -47,6 +57,7 @@
     padding     : 5px;
 }
 
+.fa-button,
 .select-icon:visited,
 .select-icon {
     float            : right;
@@ -62,8 +73,14 @@
     border           : none;
 }
 
+.fa-button:hover,
 .select-icon:hover {
     background-color : #d1d1d1;
+}
+
+.fa-button:active,
+.select-icon:active {
+    transform : scale(0.95);
 }
 
 .dropdownOptions:focus {
@@ -81,7 +98,7 @@
 }
 
 .selectValue {
-    padding-right : 20px;
+    padding-right : 30px;
 }
 
 .option {
@@ -96,5 +113,40 @@
 
 .option:hover {
     background-color : #e1e1e1;
+}
+
+.filter-container {
+    position    : absolute;
+    background  : white;
+    z-index     : 5;
+    border      : 1px solid #b1b1b1;
+    padding     : 5px;
+    top         : 0;
+    white-space : nowrap;
+    font-weight : normal;
+}
+
+.fake-checkbox {
+    display       : inline-block;
+    border        : 1px solid #ccc;
+    border-radius : 4px;
+    padding       : 1px 4px;
+    margin-right  : 6px;
+    font-size     : 0.7em;
+    cursor        : pointer;
+}
+
+.fake-checkbox.checked {
+    border : 1px solid #999;
+}
+
+.fake-checkbox .fa-check {
+    transition : 0.2s all;
+    opacity    : 0;
+}
+
+.fake-checkbox.checked .fa-check {
+    opacity : 1;
+    /*color   : #2056bf*/
 }
 

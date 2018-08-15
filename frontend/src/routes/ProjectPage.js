@@ -44,6 +44,8 @@ class ProjectPage extends Component {
                 issues = [];
             }
             this.setState({issues : issues});
+
+            //console.log(issues);
         }).catch(()=>{
 
         });
@@ -57,12 +59,34 @@ class ProjectPage extends Component {
         this.setState({project});
     }
 
+    idToIndex(id, issues){
+        for(let i = 0; i < issues.length; i++){
+            if(id === issues[i].id){
+                return i;
+            }
+        }
+
+        return null;
+    }
+
+    getNewId(issues){
+        let highest = 0;
+        issues.forEach((issue) => {
+            if(issue.id > highest){
+                highest = issue.id;
+            }
+        });
+
+        return highest + 1;
+    }
+
     updateData(value, id, fieldName) {
         const issues = this.state.issues.slice();
-        let newId    = this.state.issues.length + 1;
+        let newId    = this.getNewId(issues);
+        let index = this.idToIndex(id, issues);
 
-        if (id !== null) {
-            issues[id - 1][fieldName] = value;
+        if (id !== null && id !== "") {
+            issues[index][fieldName] = value;
             newId                     = id;
         }
         else {
